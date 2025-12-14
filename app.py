@@ -1,6 +1,12 @@
 import streamlit as st
 import random
 import time
+import base64
+
+def img_to_base64(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
 
 st.set_page_config(page_title="⚾ 野球ルーレット", layout="centered")
 
@@ -25,6 +31,10 @@ if st.button("🎯 ルーレットを回す"):
 # -------------------------
 # ルーレット表示
 # -------------------------
+roulette_b64 = img_to_base64("images/野球ルーレット.png")
+umpire_b64 = img_to_base64("images/審判.png")
+
+
 roulette_html = f"""
 <div style="text-align:center;">
   <div style="
@@ -34,16 +44,16 @@ roulette_html = f"""
     transition: transform 3s ease-out;
     transform: rotate({st.session_state.angle}deg);
   ">
-    <img src="images/野球ルーレット.png" width="300">
+    <img src="data:image/png;base64,{roulette_b64}" width="300">
   </div>
 
   <div style="margin-top:20px;">
-    <img src="images/審判.png" width="120">
+    <img src="data:image/png;base64,{umpire_b64}" width="120">
   </div>
 </div>
 """
-
 st.components.v1.html(roulette_html, height=480)
+
 
 # -------------------------
 # 回転終了フラグ解除

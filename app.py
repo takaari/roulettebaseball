@@ -1,48 +1,53 @@
 import streamlit as st
+import random
+import time
 
+st.set_page_config(page_title="⚾ 野球ルーレット", layout="centered")
 
-st.title("⚾ ルーレットベースボール")
-st.image("images/野球ルーレット.png", width=300)
-st.image("images/審判.png", width=150)
+st.title("⚾ 野球ルーレット")
 
+# -------------------------
+# セッションステート
+# -------------------------
+if "angle" not in st.session_state:
+    st.session_state.angle = 0
+if "spinning" not in st.session_state:
+    st.session_state.spinning = False
 
-html = """
-<style>
-#roulette-container {
-    text-align: center;
-    margin-top: 20px;
-}
+# -------------------------
+# 回すボタン
+# -------------------------
+if st.button("🎯 ルーレットを回す"):
+    st.session_state.spinning = True
+    st.session_state.angle = random.randint(720, 1440)  # 2〜4回転
+    st.rerun()
 
-#roulette {
-    width: 380px;
-    cursor: pointer;
-    transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
+# -------------------------
+# ルーレット表示
+# -------------------------
+roulette_html = f"""
+<div style="text-align:center;">
+  <div style="
+    width:300px;
+    height:300px;
+    margin:auto;
+    transition: transform 3s ease-out;
+    transform: rotate({st.session_state.angle}deg);
+  ">
+    <img src="images/野球ルーレット.png" width="300">
+  </div>
 
-#umpire {
-    width: 120px;
-    margin-top: 20px;
-}
-</style>
-
-<div id="roulette-container">
-    <img id="roulette" src="images/野球ルーレット.png">
-    <br>
-    <img id="umpire" src="images/審判.png">
+  <div style="margin-top:20px;">
+    <img src="images/審判.png" width="120">
+  </div>
 </div>
-
-<script>
-let angle = 0;
-const roulette = document.getElementById("roulette");
-
-roulette.onclick = () => {
-    // 3～6回転分ランダム
-    const spin = Math.floor(Math.random() * 1080) + 1080;
-    angle += spin;
-    roulette.style.transform = `rotate(${angle}deg)`;
-};
-</script>
 """
 
-st.components.v1.html(html, height=600)
+st.components.v1.html(roulette_html, height=480)
 
+# -------------------------
+# 回転終了フラグ解除
+# -------------------------
+if st.session_state.spinning:
+    time.sleep(3)
+    st.session_state.spinning = False

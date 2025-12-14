@@ -2,6 +2,9 @@ import streamlit as st
 
 
 st.title("⚾ ルーレットベースボール")
+st.image("images/野球ルーレット.png", width=300)
+st.image("images/審判.png", width=150)
+
 
 html = """
 <style>

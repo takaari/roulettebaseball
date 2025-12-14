@@ -1,15 +1,12 @@
 import streamlit as st
 import random
-import time
 import base64
 
 def img_to_base64(path):
     with open(path, "rb") as f:
         return base64.b64encode(f.read()).decode()
 
-
 st.set_page_config(page_title="⚾ 野球ルーレット", layout="centered")
-
 st.title("⚾ 野球ルーレット")
 
 # -------------------------
@@ -17,24 +14,23 @@ st.title("⚾ 野球ルーレット")
 # -------------------------
 if "angle" not in st.session_state:
     st.session_state.angle = 0
-if "spinning" not in st.session_state:
-    st.session_state.spinning = False
 
 # -------------------------
 # 回すボタン
 # -------------------------
 if st.button("🎯 ルーレットを回す"):
-    st.session_state.spinning = True
-    st.session_state.angle = random.randint(720, 1440)  # 2〜4回転
-    st.rerun()
+    # ⭐ 角度を「加算」するのがポイント
+    st.session_state.angle += random.randint(720, 1440)  # 2〜4回転
 
 # -------------------------
-# ルーレット表示
+# 画像読み込み
 # -------------------------
 roulette_b64 = img_to_base64("images/野球ルーレット.png")
 umpire_b64 = img_to_base64("images/審判.png")
 
-
+# -------------------------
+# HTML表示
+# -------------------------
 roulette_html = f"""
 <div style="text-align:center;">
   <div style="
@@ -52,12 +48,5 @@ roulette_html = f"""
   </div>
 </div>
 """
+
 st.components.v1.html(roulette_html, height=480)
-
-
-# -------------------------
-# 回転終了フラグ解除
-# -------------------------
-if st.session_state.spinning:
-    time.sleep(3)
-    st.session_state.spinning = False

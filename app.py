@@ -12,14 +12,8 @@ st.title("⚾ 野球ルーレット")
 roulette_b64 = img_to_base64("images/野球ルーレット.png")
 umpire_b64 = img_to_base64("images/審判.png")
 
-# -------------------------
-# ボタン
-# -------------------------
 spin = st.button("🎯 ルーレットを回す")
 
-# -------------------------
-# HTML + JavaScript
-# -------------------------
 html = f"""
 <div style="text-align:center;">
   <div id="wheel" style="
@@ -41,8 +35,8 @@ let angle = 0;
 
 function spinWheel() {{
   const wheel = document.getElementById("wheel");
-  angle += Math.floor(Math.random() * 720) + 720; // 2〜4回転
-  wheel.style.transform = `rotate(${angle}deg)`;
+  angle += Math.floor(Math.random() * 720) + 720;
+  wheel.style.transform = `rotate(${{angle}}deg)`;
 }}
 
 {"spinWheel();" if spin else ""}

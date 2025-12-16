@@ -23,7 +23,7 @@ html = f"""
     <img src="data:image/png;base64,{roulette_b64}" width="300">
   </div>
 
-  <div style="margin-top:20px;">
+  <div style="margin-top:-30px;">
     <img src="data:image/png;base64,{umpire_b64}" width="120">
   </div>
 

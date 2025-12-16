@@ -1,6 +1,5 @@
 import streamlit as st
 import base64
-import random
 
 def img_to_base64(path):
     with open(path, "rb") as f:
@@ -12,15 +11,14 @@ st.title("⚾ 野球ルーレット")
 roulette_b64 = img_to_base64("images/野球ルーレット.png")
 umpire_b64 = img_to_base64("images/審判.png")
 
-spin = st.button("🎯 ルーレットを回す")
-
 html = f"""
 <div style="text-align:center;">
+  
   <div id="wheel" style="
     width:300px;
     height:300px;
     margin:auto;
-    transition: transform 3s ease-out;
+    transition: transform 3s cubic-bezier(.17,.67,.36,1);
   ">
     <img src="data:image/png;base64,{roulette_b64}" width="300">
   </div>
@@ -28,19 +26,26 @@ html = f"""
   <div style="margin-top:20px;">
     <img src="data:image/png;base64,{umpire_b64}" width="120">
   </div>
+
+  <button onclick="spinWheel()" style="
+    margin-top:20px;
+    font-size:18px;
+    padding:8px 20px;
+    cursor:pointer;
+  ">
+    🎯 ルーレットを回す
+  </button>
 </div>
 
 <script>
 let angle = 0;
 
 function spinWheel() {{
-  const wheel = document.getElementById("wheel");
   angle += Math.floor(Math.random() * 720) + 720;
-  wheel.style.transform = `rotate(${{angle}}deg)`;
+  document.getElementById("wheel").style.transform =
+    `rotate(${{angle}}deg)`;
 }}
-
-{"spinWheel();" if spin else ""}
 </script>
 """
 
-st.components.v1.html(html, height=480)
+st.components.v1.html(html, height=520)

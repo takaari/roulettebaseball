@@ -1,6 +1,6 @@
 import streamlit as st
-import random
 import base64
+import random
 
 def img_to_base64(path):
     with open(path, "rb") as f:
@@ -9,36 +9,24 @@ def img_to_base64(path):
 st.set_page_config(page_title="⚾ 野球ルーレット", layout="centered")
 st.title("⚾ 野球ルーレット")
 
-# -------------------------
-# セッションステート
-# -------------------------
-if "angle" not in st.session_state:
-    st.session_state.angle = 0
-
-# -------------------------
-# 回すボタン
-# -------------------------
-if st.button("🎯 ルーレットを回す"):
-    # ⭐ 角度を「加算」するのがポイント
-    st.session_state.angle += random.randint(720, 1440)  # 2〜4回転
-
-# -------------------------
-# 画像読み込み
-# -------------------------
 roulette_b64 = img_to_base64("images/野球ルーレット.png")
 umpire_b64 = img_to_base64("images/審判.png")
 
 # -------------------------
-# HTML表示
+# ボタン
 # -------------------------
-roulette_html = f"""
+spin = st.button("🎯 ルーレットを回す")
+
+# -------------------------
+# HTML + JavaScript
+# -------------------------
+html = f"""
 <div style="text-align:center;">
-  <div style="
+  <div id="wheel" style="
     width:300px;
     height:300px;
     margin:auto;
     transition: transform 3s ease-out;
-    transform: rotate({st.session_state.angle}deg);
   ">
     <img src="data:image/png;base64,{roulette_b64}" width="300">
   </div>
@@ -47,6 +35,18 @@ roulette_html = f"""
     <img src="data:image/png;base64,{umpire_b64}" width="120">
   </div>
 </div>
+
+<script>
+let angle = 0;
+
+function spinWheel() {{
+  const wheel = document.getElementById("wheel");
+  angle += Math.floor(Math.random() * 720) + 720; // 2〜4回転
+  wheel.style.transform = `rotate(${angle}deg)`;
+}}
+
+{"spinWheel();" if spin else ""}
+</script>
 """
 
-st.components.v1.html(roulette_html, height=480)
+st.components.v1.html(html, height=480)

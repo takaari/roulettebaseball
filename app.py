@@ -39,15 +39,7 @@ html = f"""
 </div>
 
 
-<script>
-let angle = 0;
 
-function spinWheel() {{
-  angle += Math.floor(Math.random() * 720) + 720;
-  document.getElementById("wheel").style.transform =
-    `rotate(${{angle}}deg)`;
-}}
-</script>
 """
 
 st.components.v1.html(html, height=520)

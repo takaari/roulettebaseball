@@ -12,34 +12,40 @@ roulette_b64 = img_to_base64("images/野球ルーレット.png")
 umpire_b64 = img_to_base64("images/審判.png")
 
 html = f"""
-<div style="text-align:center; position:relative; width:300px; margin:auto;">
-
-  <!-- ルーレット -->
-  <div id="wheel"
-       style="
-         width:300px;
-         height:300px;
-         transition: transform 3s ease-out;
-         transform: rotate({angle}deg);
-       ">
+<div style="text-align:center;">
+  
+  <div id="wheel" style="
+    width:300px;
+    height:300px;
+    margin:auto;
+    transition: transform 3s cubic-bezier(.17,.67,.36,1);
+  ">
     <img src="data:image/png;base64,{roulette_b64}" width="300">
   </div>
 
-  <!-- 審判（必ず上に表示） -->
-  <img src="data:image/png;base64,{umpire_b64}"
-       width="120"
-       style="
-         position:absolute;
-         top: 260px;
-         left: 50%;
-         transform: translateX(-50%);
-         z-index: 10;
-       ">
+  <div style="margin-top:-20px;">
+    <img src="data:image/png;base64,{umpire_b64}" width="120">
+  </div>
 
+  <button onclick="spinWheel()" style="
+    margin-top:20px;
+    font-size:18px;
+    padding:8px 20px;
+    cursor:pointer;
+  ">
+    🎯 ルーレットを回す
+  </button>
 </div>
 
+<script>
+let angle = 0;
 
-
+function spinWheel() {{
+  angle += Math.floor(Math.random() * 720) + 720;
+  document.getElementById("wheel").style.transform =
+    `rotate(${{angle}}deg)`;
+}}
+</script>
 """
 
 st.components.v1.html(html, height=520)

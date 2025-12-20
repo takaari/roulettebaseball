@@ -6,16 +6,24 @@ def img_to_base64(path):
         return base64.b64encode(f.read()).decode()
 
 st.set_page_config(page_title="⚾ 野球ルーレット", layout="centered")
-st.title("⚾ 野球ルーレット")
+
 
 st.markdown(
     """
     <style>
+
     .stApp {
         background-color: #9f4a23;
         color: white;
     }
     </style>
+    <h1 style="
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 10px;
+    ">
+        ⚾ 野球ルーレット
+    </h1>
     """,
     unsafe_allow_html=True
 )

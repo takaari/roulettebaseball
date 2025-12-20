@@ -8,6 +8,18 @@ def img_to_base64(path):
 st.set_page_config(page_title="⚾ 野球ルーレット", layout="centered")
 st.title("⚾ 野球ルーレット")
 
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #9f4a23;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 roulette_b64 = img_to_base64("images/野球ルーレット.png")
 umpire_b64 = img_to_base64("images/審判.png")
 

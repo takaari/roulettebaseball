@@ -18,7 +18,7 @@ st.markdown(
     }
     </style>
     <h1 style="
-        font-size: 28px;
+        font-size: 27px;
         text-align: center;
         margin-bottom: 10px;
     ">
